@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASHOK Blood Care - Every Drop Can Save a Life</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loader-content">
+            <div class="loader-logo">A+</div>
+            <div class="loader-text">ASHOK BLOOD CARE</div>
+            <div class="loader-subtext">SMART BLOOD MANAGEMENT</div>
+            <div class="loader-line"></div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🩸</span>
+                <span class="logo-text">ASHOK</span>
+                <span class="logo-subtext">Blood Care</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link active">Home</a></li>
+                <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+                <li><a href="donors.html" class="nav-link">Donors</a></li>
+                <li><a href="blood-stock.html" class="nav-link">Blood Stock</a></li>
+                <li><a href="requests.html" class="nav-link">Requests</a></li>
+                <li><a href="gallery.html" class="nav-link">Gallery</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+            </ul>
+            <a href="#" class="cta-btn">DONATE BLOOD ↗</a>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Cinematic Slider -->
+    <section class="hero">
+        <div class="hero-slider">
+            <div class="slider-container">
+                <!-- Slide 1 -->
+                <div class="slide" data-slide="1">
+                    <div class="slide-image" style="background-image: url('https://cdn.slidesharecdn.com/ss_thumbnails/blooddonormanagmentsystem-150101024434-conversion-gate01-thumbnail.jpg?width=560&fit=bounds')"></div>
+                    <div class="slide-overlay"></div>
+                    <div class="slide-content">
+                        <span class="slide-label">ASHOK BLOOD CARE</span>
+                        <h1 class="slide-title">
+                            Every Drop<br>
+                            <span class="accent">Can Save a Life.</span>
+                        </h1>
+                        <p class="slide-description">Connecting people, blood and technology through smart blood management.</p>
+                        <div class="slide-buttons">
+                            <button class="btn btn-primary">DONATE BLOOD ↗</button>
+                            <button class="btn btn-secondary">CHECK AVAILABILITY →</button>
+                        </div>
+                    </div>
+                    <div class="slide-cards">
+                        <div class="stat-card floating" style="--delay: 0s">
+                            <div class="card-number">12.8K+</div>
+                            <div class="card-label">Registered Donors</div>
+                        </div>
+                        <div class="stat-card floating" style="--delay: 0.2s">
+                            <div class="card-number">1,248</div>
+                            <div class="card-label">Units Available</div>
+                        </div>
+                        <div class="stat-card floating" style="--delay: 0.4s">
+                            <div class="card-number">24/7</div>
+                            <div class="card-label">Emergency Support</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 2 -->
+                <div class="slide" data-slide="2">
+                    <div class="slide-image" style="background-image: url('https://www.slogansworld.com/wp-content/uploads/2024/06/Give-Blood-Save-Lives.jpg')"></div>
+                    <div class="slide-overlay"></div>
+                    <div class="slide-content">
+                        <span class="slide-label">DONATION MATTERS</span>
+                        <h1 class="slide-title">
+                            Give Blood.<br>
+                            <span class="accent">Give Hope.</span>
+                        </h1>
+                        <p class="slide-description">Every donor can become someone's reason to hope and chance at life.</p>
+                        <div class="slide-buttons">
+                            <button class="btn btn-primary">DONATE BLOOD ↗</button>
+                            <button class="btn btn-secondary">LEARN MORE →</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 3 -->
+                <div class="slide" data-slide="3">
+                    <div class="slide-image" style="background-image: url('https://blog.pragtech.co.in/wp-content/uploads/2026/02/Blood-bank-management-system-1.jpg')"></div>
+                    <div class="slide-overlay"></div>
+                    <div class="slide-content">
+                        <span class="slide-label">INVENTORY</span>
+                        <h1 class="slide-title">
+                            Know What's<br>
+                            <span class="accent">Available.</span>
+                        </h1>
+                        <p class="slide-description">Real-time blood stock information at your fingertips.</p>
+                        <div class="slide-buttons">
+                            <button class="btn btn-primary">CHECK STOCK →</button>
+                            <button class="btn btn-secondary">DASHBOARD →</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 4 -->
+                <div class="slide" data-slide="4">
+                    <div class="slide-image" style="background-image: url('https://images.unsplash.com/photo-1584308666744-24d5f400f6f5?w=1400&q=90&fit=crop')"></div>
+                    <div class="slide-overlay"></div>
+                    <div class="slide-content">
+                        <span class="slide-label">COMMUNITY</span>
+                        <h1 class="slide-title">
+                            Stronger<br>
+                            <span class="accent">Together.</span>
+                        </h1>
+                        <p class="slide-description">Technology that connects donors, blood banks and communities.</p>
+                        <div class="slide-buttons">
+                            <button class="btn btn-primary">JOIN COMMUNITY →</button>
+                            <button class="btn btn-secondary">EVENTS →</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 5 -->
+                <div class="slide" data-slide="5">
+                    <div class="slide-image" style="background-image: url('https://www.nhlbi.nih.gov/sites/default/files/styles/16x9_crop/public/2023-05/Blood-Donation-Bag-Connected-to-Heart-Shape_Stock-Illustration.jpg?h=9fb2ff0c&itok=h-HPhN-6')"></div>
+                    <div class="slide-overlay"></div>
+                    <div class="slide-content">
+                        <span class="slide-label">OUR PURPOSE</span>
+                        <h1 class="slide-title">
+                            Technology With<br>
+                            <span class="accent">Human Purpose.</span>
+                        </h1>
+                        <p class="slide-description">Better information. Better coordination. Better care.</p>
+                        <div class="slide-buttons">
+                            <button class="btn btn-primary">EXPLORE ↗</button>
+                            <button class="btn btn-secondary">ABOUT US →</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slider Controls -->
+            <div class="slider-controls">
+                <button class="slider-btn prev">❮</button>
+                <button class="slider-btn next">❯</button>
+            </div>
+
+            <!-- Slide Indicators -->
+            <div class="slider-indicators">
+                <div class="indicator-group">
+                    <span class="indicator active" data-slide="1"></span>
+                    <span class="indicator" data-slide="2"></span>
+                    <span class="indicator" data-slide="3"></span>
+                    <span class="indicator" data-slide="4"></span>
+                    <span class="indicator" data-slide="5"></span>
+                </div>
+                <span class="slide-counter"><span class="current-slide">01</span> / 05</span>
+            </div>
+
+            <!-- System Status -->
+            <div class="system-status">
+                <span class="status-dot"></span>
+                <span class="status-text">SYSTEM LIVE</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Introduction Section -->
+    <section class="section-intro">
+        <div class="container">
+            <div class="intro-grid">
+                <div class="intro-text">
+                    <h2 class="section-title">Blood Care,<br><span class="accent">Connected.</span></h2>
+                    <p>From donor registration to blood availability and urgent requests, ASHOK BLOOD CARE brings essential blood-management activities into one clear, connected digital experience.</p>
+                </div>
+                <div class="intro-image">
+                    <img src="https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=600&q=90&fit=crop" alt="Healthcare professionals">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="section-services">
+        <div class="container">
+            <h2 class="section-title text-center">Premium Services</h2>
+            <p class="section-subtitle text-center">Complete blood management solutions built for modern healthcare</p>
+            
+            <div class="services-grid">
+                <div class="service-card" data-aos="fadeUp">
+                    <div class="card-icon">🩸</div>
+                    <h3>Blood Donation</h3>
+                    <p>Make donor registration simple and meaningful with our streamlined digital platform.</p>
+                    <div class="card-number">01</div>
+                </div>
+                <div class="service-card" data-aos="fadeUp">
+                    <div class="card-icon">📊</div>
+                    <h3>Blood Availability</h3>
+                    <p>Know which blood groups are available at a glance with real-time inventory updates.</p>
+                    <div class="card-number">02</div>
+                </div>
+                <div class="service-card" data-aos="fadeUp">
+                    <div class="card-icon">🚨</div>
+                    <h3>Emergency Requests</h3>
+                    <p>Organize urgent blood requirements clearly when every moment matters most.</p>
+                    <div class="card-number">03</div>
+                </div>
+                <div class="service-card" data-aos="fadeUp">
+                    <div class="card-icon">⚙️</div>
+                    <h3>Smart Dashboard</h3>
+                    <p>Turn blood-bank information into actionable insights for better decisions.</p>
+                    <div class="card-number">04</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blood Inventory Section -->
+    <section class="section-inventory">
+        <div class="container">
+            <h2 class="section-title text-center">Know What's Available</h2>
+            <p class="section-subtitle text-center demo-label">DEMO INVENTORY</p>
+            
+            <div class="inventory-grid">
+                <div class="blood-card" data-group="A+">
+                    <div class="blood-group">A+</div>
+                    <div class="units">184</div>
+                    <div class="units-label">Units</div>
+                    <div class="status available">AVAILABLE</div>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 92%"></div>
+                    </div>
+                </div>
+
+                <div class="blood-card" data-group="A-">
+                    <div class="blood-group">A-</div>
+                    <div class="units">42</div>
+                    <div class="units-label">Units</div>
+                    <div class="status limited">LIMITED</div>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 42%"></div>
+                    </div>
+                </div>
+
+                <div class="blood-card" data-group="B+">
+                    <div class="blood-group">B+</div>
+                    <div class="units">156</div>
+                    <div class="units-label">Units</div>
+                    <div class="status available">AVAILABLE</div>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 78%"></div>
+                    </div>
+                </div>
+
+                <div class="blood-card" data-group="B-">
+                    <div class="blood-group">B-</div>
+                    <div class="units">18</div>
+                    <div class="units-label">Units</div>
+                    <div class="status critical">CRITICAL</div>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 18%"></div>
+                    </div>
+                </div>
+
+                <div class="blood-card" data-group="AB+">
+                    <div class="blood-group">AB+</div>
+                    <div class="units">71</div>
+                    <div class="units-label">Units</div>
+                    <div class="status available">AVAILABLE</div>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 71%"></div>
+                    </div>
+                </div>
+
+                <div class="blood-card" data-group="AB-">
+                    <div class="blood-group">AB-</div>
+                    <div class="units">14</div>
+                    <div class="units-label">Units</div>
+                    <div class="status critical">CRITICAL</div>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 14%"></div>
+                    </div>
+                </div>
+
+                <div class="blood-card" data-group="O+">
+                    <div class="blood-group">O+</div>
+                    <div class="units">233</div>
+                    <div class="units-label">Units</div>
+                    <div class="status available">AVAILABLE</div>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 100%"></div>
+                    </div>
+                </div>
+
+                <div class="blood-card" data-group="O-">
+                    <div class="blood-group">O-</div>
+                    <div class="units">29</div>
+                    <div class="units-label">Units</div>
+                    <div class="status limited">LIMITED</div>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 29%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Inventory Modal -->
+    <div id="inventory-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h2 id="modal-blood-group"></h2>
+            <div class="modal-details">
+                <div class="detail-item">
+                    <span class="detail-label">Available Units:</span>
+                    <span id="modal-available" class="detail-value"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Reserved Units:</span>
+                    <span id="modal-reserved" class="detail-value"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Status:</span>
+                    <span id="modal-status" class="detail-value"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Last Updated:</span>
+                    <span id="modal-updated" class="detail-value"></span>
+                </div>
+            </div>
+            <p class="demo-label">DEMO DATA</p>
+        </div>
+    </div>
+
+    <!-- Donor Experience Section -->
+    <section class="section-donor-experience">
+        <div class="container">
+            <h2 class="section-title text-center">Be Someone's<br><span class="accent">Reason to Hope.</span></h2>
+            
+            <div class="experience-grid">
+                <div class="experience-image">
+                    <img src="https://media.istockphoto.com/id/1972079170/photo/portrait-of-young-male-blood-donor-in-medical-mask.jpg?s=1024x1024&w=is&k=20&c=uE3rKrgAYY8jhYR0fNAgSVHiOxxwMVZk313oCm1x_iA=" alt="Blood donor">
+                </div>
+                <div class="experience-content">
+                    <div class="process-steps">
+                        <div class="step" data-step="1">
+                            <div class="step-number">01</div>
+                            <h4>REGISTER</h4>
+                            <p>Create your donor profile in minutes</p>
+                        </div>
+                        <div class="step-arrow">→</div>
+                        <div class="step" data-step="2">
+                            <div class="step-number">02</div>
+                            <h4>SCREEN</h4>
+                            <p>Quick health screening process</p>
+                        </div>
+                        <div class="step-arrow">→</div>
+                        <div class="step" data-step="3">
+                            <div class="step-number">03</div>
+                            <h4>DONATE</h4>
+                            <p>Safe and comfortable donation</p>
+                        </div>
+                        <div class="step-arrow">→</div>
+                        <div class="step" data-step="4">
+                            <div class="step-number">04</div>
+                            <h4>SAVE LIVES</h4>
+                            <p>Your blood helps someone live</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary">REGISTER AS DONOR ↗</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="section-stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-number" data-target="12000">0</div>
+                    <span class="stat-label">Registered Donors</span>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" data-target="8000">0</div>
+                    <span class="stat-label">Units Collected</span>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" data-target="35">0</div>
+                    <span class="stat-label">Donation Camps</span>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">24/7</div>
+                    <span class="stat-label">Emergency Support</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visual Story Section -->
+    <section class="section-story">
+        <div class="story-background" style="background-image: url('https://th.bing.com/th/id/R.2ecf296d5c8e55f80212e6129657f396?rik=GtpETKDFbGqckw&riu=http%3a%2f%2fwww.biotestplasma.com%2fwp-content%2fuploads%2fThe-Science-Behind-Blood-Donation.jpg&ehk=y539paWtsfFi0SJ46ApKOUX8A0dT0L4PDGBQ1z2XWIs%3d&risl=&pid=ImgRaw&r=0')"></div>
+        <div class="story-overlay"></div>
+        <div class="container">
+            <div class="story-content">
+                <h2>Behind every unit<br><span class="accent">is a human story.</span></h2>
+                <p>Technology becomes meaningful when it solves real human problems and connects people with purpose.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="section-final-cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Technology with a<br><span class="accent">human purpose.</span></h2>
+                <p>Better information. Better coordination. Better care.</p>
+                <div class="cta-buttons">
+                    <button class="btn btn-primary">DONATE BLOOD</button>
+                    <button class="btn btn-secondary">VIEW DASHBOARD</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <span class="logo-icon">🩸</span>
+                        <span>ASHOK Blood Care</span>
+                    </div>
+                    <p>Every Drop Can Save a Life.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                        <li><a href="donors.html">Donors</a></li>
+                        <li><a href="blood-stock.html">Blood Stock</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>More</h4>
+                    <ul>
+                        <li><a href="requests.html">Requests</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 ASHOK BLOOD CARE · Student Project Demonstration</p>
+                <p>Demo platform — all records and statistics shown are fictional.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

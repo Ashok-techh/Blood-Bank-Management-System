@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - ASHOK Blood Care</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Dashboard Specific Styles */
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+            margin-top: 80px;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: var(--dark-gray);
+            padding: 40px 0;
+            border-right: 1px solid rgba(220, 20, 60, 0.1);
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            margin-top: 80px;
+        }
+
+        .sidebar-logo {
+            padding: 0 30px;
+            margin-bottom: 50px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: var(--font-display);
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            margin-bottom: 50px;
+        }
+
+        .sidebar-menu li {
+            margin: 0;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 30px;
+            color: var(--text-gray);
+            text-decoration: none;
+            transition: all var(--transition-smooth);
+            position: relative;
+        }
+
+        .sidebar-menu a:hover,
+        .sidebar-menu a.active {
+            color: var(--primary-red);
+            background: rgba(220, 20, 60, 0.1);
+            border-left: 3px solid var(--primary-red);
+            padding-left: 27px;
+        }
+
+        .sidebar-bottom {
+            position: absolute;
+            bottom: 30px;
+            left: 0;
+            right: 0;
+            padding: 0 30px;
+        }
+
+        .sidebar-bottom a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 15px;
+            color: var(--text-gray);
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all var(--transition-smooth);
+            margin-bottom: 10px;
+        }
+
+        .sidebar-bottom a:hover {
+            background: rgba(220, 20, 60, 0.1);
+            color: var(--primary-red);
+        }
+
+        .dashboard-main {
+            margin-left: 280px;
+            flex: 1;
+            padding: 40px;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 50px;
+        }
+
+        .header-left h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            font-family: var(--font-display);
+        }
+
+        .header-left p {
+            color: var(--text-gray);
+            font-size: 1rem;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .search-bar {
+            position: relative;
+            width: 300px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 40px 12px 15px;
+            background: var(--medium-gray);
+            border: 1px solid rgba(220, 20, 60, 0.1);
+            border-radius: 10px;
+            color: var(--text-white);
+            font-family: var(--font-body);
+            transition: all var(--transition-smooth);
+        }
+
+        .search-input::placeholder {
+            color: var(--text-gray);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-red);
+            background: rgba(220, 20, 60, 0.05);
+        }
+
+        .search-bar::after {
+            content: '🔍';
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: var(--text-gray);
+        }
+
+        .profile-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-red), var(--bright-red));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            cursor: pointer;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .stat-card-dashboard {
+            background: var(--medium-gray);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(220, 20, 60, 0.1);
+            transition: all var(--transition-smooth);
+        }
+
+        .stat-card-dashboard:hover {
+            border-color: rgba(220, 20, 60, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .stat-label {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary-red);
+            margin-bottom: 15px;
+            font-family: var(--font-display);
+        }
+
+        .stat-change {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.85rem;
+            color: #4caf50;
+        }
+
+        .charts-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .chart-card {
+            background: var(--medium-gray);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(220, 20, 60, 0.1);
+        }
+
+        .chart-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            font-family: var(--font-display);
+        }
+
+        .chart-canvas {
+            width: 100%;
+            height: 250px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+
+        .requests-section {
+            background: var(--medium-gray);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(220, 20, 60, 0.1);
+            overflow-x: auto;
+        }
+
+        .requests-section h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            font-family: var(--font-display);
+        }
+
+        .demo-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .demo-table thead {
+            border-bottom: 2px solid rgba(220, 20, 60, 0.2);
+        }
+
+        .demo-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-gray);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .demo-table td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(220, 20, 60, 0.1);
+        }
+
+        .demo-table tbody tr {
+            transition: background var(--transition-smooth);
+        }
+
+        .demo-table tbody tr:hover {
+            background: rgba(220, 20, 60, 0.05);
+        }
+
+        .status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status.pending {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+        }
+
+        .status.approved {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+        }
+
+        .status.fulfilled {
+            background: rgba(33, 150, 243, 0.2);
+            color: #2196f3;
+        }
+
+        @media (max-width: 1024px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: static;
+                margin-top: 0;
+                border-right: none;
+                border-bottom: 1px solid rgba(220, 20, 60, 0.1);
+                padding: 20px 0;
+                display: flex;
+                align-items: center;
+            }
+
+            .sidebar-logo {
+                margin-bottom: 0;
+                margin-right: auto;
+                padding-left: 30px;
+            }
+
+            .sidebar-menu {
+                display: flex;
+                gap: 10px;
+                margin-bottom: 0;
+                flex-wrap: wrap;
+                padding: 0 30px;
+            }
+
+            .sidebar-menu a {
+                padding: 10px 15px;
+            }
+
+            .sidebar-bottom {
+                position: static;
+                display: flex;
+                gap: 10px;
+                padding: 0 30px;
+            }
+
+            .dashboard-main {
+                margin-left: 0;
+                padding: 30px 20px;
+            }
+
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+
+            .header-right {
+                flex-direction: column;
+                gap: 15px;
+                width: 100%;
+            }
+
+            .search-bar {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar-menu {
+                overflow-x: auto;
+                padding: 0 20px;
+            }
+
+            .stats-container {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .dashboard-main {
+                padding: 20px 15px;
+            }
+
+            .stat-value {
+                font-size: 1.8rem;
+            }
+
+            .search-input {
+                padding: 10px 35px 10px 12px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🩸</span>
+                <span class="logo-text">ASHOK</span>
+                <span class="logo-subtext">Blood Care</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="dashboard.html" class="nav-link active">Dashboard</a></li>
+                <li><a href="donors.html" class="nav-link">Donors</a></li>
+                <li><a href="blood-stock.html" class="nav-link">Blood Stock</a></li>
+                <li><a href="requests.html" class="nav-link">Requests</a></li>
+                <li><a href="gallery.html" class="nav-link">Gallery</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+            </ul>
+            <a href="#" class="cta-btn">DONATE BLOOD ↗</a>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <span>🩸</span>
+                <span>Dashboard</span>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html" class="active">📊 Dashboard</a></li>
+                <li><a href="donors.html">👥 Donors</a></li>
+                <li><a href="blood-stock.html">🩸 Blood Stock</a></li>
+                <li><a href="requests.html">📋 Requests</a></li>
+                <li><a href="gallery.html">🎨 Gallery</a></li>
+                <li><a href="about.html">ℹ️ About</a></li>
+            </ul>
+            <div class="sidebar-bottom">
+                <a href="#">⚙️ Settings</a>
+                <a href="#">❓ Help Center</a>
+                <a href="index.html">🚪 Logout</a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <!-- Header -->
+            <div class="dashboard-header">
+                <div class="header-left">
+                    <h1>Good Morning, Admin</h1>
+                    <p>Here's your blood-care command center for today</p>
+                </div>
+                <div class="header-right">
+                    <div class="search-bar">
+                        <input type="text" class="search-input" placeholder="Search...">
+                    </div>
+                    <div class="profile-icon">👤</div>
+                </div>
+            </div>
+
+            <!-- Header Image -->
+            <div style="margin-top: 60px; margin-bottom: 60px; text-align: center;">
+                <img src="https://static.vecteezy.com/system/resources/previews/053/320/400/non_2x/blood-donor-month-a-drop-of-blood-created-with-the-help-of-technology-photo.jpg" alt="Blood Bank Dashboard" style="width: 100%; max-width: 600px; border-radius: 20px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); display: block; margin: 0 auto;">
+                <p style="margin-top: 30px; font-size: 1.15rem; color: var(--text-white); font-weight: 600; text-align: center;">that matter</p>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-container">
+                <div class="stat-card-dashboard">
+                    <div class="stat-label">TOTAL DONORS</div>
+                    <div class="stat-value">12,842</div>
+                    <div class="stat-change">↑ 12.5% from last month</div>
+                </div>
+                <div class="stat-card-dashboard">
+                    <div class="stat-label">AVAILABLE UNITS</div>
+                    <div class="stat-value">1,248</div>
+                    <div class="stat-change">↑ 8.2% from last week</div>
+                </div>
+                <div class="stat-card-dashboard">
+                    <div class="stat-label">PENDING REQUESTS</div>
+                    <div class="stat-value">24</div>
+                    <div class="stat-change" style="color: #ffc107;">→ No change</div>
+                </div>
+                <div class="stat-card-dashboard">
+                    <div class="stat-label">TODAY'S DONATIONS</div>
+                    <div class="stat-value">86</div>
+                    <div class="stat-change">↑ 15% from average</div>
+                </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="charts-section">
+                <div class="chart-card">
+                    <h3>Donation Activity (Last 12 Months)</h3>
+                    <canvas id="donation-chart" class="chart-canvas"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Blood Stock Overview</h3>
+                    <canvas id="inventory-chart" class="chart-canvas"></canvas>
+                </div>
+            </div>
+
+            <!-- Recent Requests -->
+            <div class="requests-section">
+                <h3>Recent Blood Requests</h3>
+                <p class="demo-label">DEMO DATA</p>
+                <table class="demo-table">
+                    <thead>
+                        <tr>
+                            <th>REQUEST ID</th>
+                            <th>PATIENT</th>
+                            <th>BLOOD GROUP</th>
+                            <th>UNITS</th>
+                            <th>PRIORITY</th>
+                            <th>STATUS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#REQ-2048</td>
+                            <td>Demo Patient</td>
+                            <td>O+</td>
+                            <td>2 units</td>
+                            <td>
+                                <span class="priority" style="background: rgba(220, 20, 60, 0.2); color: var(--primary-red); padding: 6px 12px; border-radius: 20px; font-weight: 600; font-size: 0.8rem;">URGENT</span>
+                            </td>
+                            <td><span class="status pending">Pending</span></td>
+                        </tr>
+                        <tr>
+                            <td>#REQ-2047</td>
+                            <td>Demo Patient</td>
+                            <td>A+</td>
+                            <td>3 units</td>
+                            <td>
+                                <span class="priority" style="background: rgba(33, 150, 243, 0.2); color: #2196f3; padding: 6px 12px; border-radius: 20px; font-weight: 600; font-size: 0.8rem;">NORMAL</span>
+                            </td>
+                            <td><span class="status approved">Approved</span></td>
+                        </tr>
+                        <tr>
+                            <td>#REQ-2046</td>
+                            <td>Demo Patient</td>
+                            <td>B-</td>
+                            <td>1 unit</td>
+                            <td>
+                                <span class="priority" style="background: rgba(255, 193, 7, 0.2); color: #ffc107; padding: 6px 12px; border-radius: 20px; font-weight: 600; font-size: 0.8rem;">NORMAL</span>
+                            </td>
+                            <td><span class="status fulfilled">Fulfilled</span></td>
+                        </tr>
+                        <tr>
+                            <td>#REQ-2045</td>
+                            <td>Demo Patient</td>
+                            <td>AB+</td>
+                            <td>4 units</td>
+                            <td>
+                                <span class="priority" style="background: rgba(220, 20, 60, 0.2); color: var(--primary-red); padding: 6px 12px; border-radius: 20px; font-weight: 600; font-size: 0.8rem;">EMERGENCY</span>
+                            </td>
+                            <td><span class="status fulfilled">Fulfilled</span></td>
+                        </tr>
+                        <tr>
+                            <td>#REQ-2044</td>
+                            <td>Demo Patient</td>
+                            <td>O-</td>
+                            <td>2 units</td>
+                            <td>
+                                <span class="priority" style="background: rgba(33, 150, 243, 0.2); color: #2196f3; padding: 6px 12px; border-radius: 20px; font-weight: 600; font-size: 0.8rem;">NORMAL</span>
+                            </td>
+                            <td><span class="status pending">Pending</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

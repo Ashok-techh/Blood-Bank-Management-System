@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Requests - ASHOK Blood Care</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .requests-page {
+            padding-top: 80px;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--dark-gray) 0%, var(--medium-gray) 100%);
+            padding: 80px 0;
+            border-bottom: 1px solid rgba(220, 20, 60, 0.1);
+        }
+
+        .page-header .container {
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            font-family: var(--font-display);
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--text-gray);
+        }
+
+        .content-section {
+            padding: 80px 0;
+        }
+
+        .controls-bar {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 12px 40px 12px 15px;
+            background: var(--medium-gray);
+            border: 1px solid rgba(220, 20, 60, 0.1);
+            border-radius: 10px;
+            color: var(--text-white);
+            font-family: var(--font-body);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-red);
+        }
+
+        .new-request-btn {
+            padding: 12px 30px;
+            background: var(--primary-red);
+            color: var(--text-white);
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-smooth);
+        }
+
+        .new-request-btn:hover {
+            background: var(--dark-red);
+            box-shadow: 0 0 20px rgba(220, 20, 60, 0.4);
+        }
+
+        .filters {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            background: var(--medium-gray);
+            border: 1px solid rgba(220, 20, 60, 0.2);
+            color: var(--text-gray);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all var(--transition-smooth);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .filter-btn.active {
+            background: var(--primary-red);
+            color: var(--text-white);
+            border-color: var(--primary-red);
+        }
+
+        .table-container {
+            background: var(--medium-gray);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(220, 20, 60, 0.1);
+            overflow-x: auto;
+            margin-bottom: 60px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+
+        table thead {
+            border-bottom: 2px solid rgba(220, 20, 60, 0.2);
+        }
+
+        table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-gray);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        table td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(220, 20, 60, 0.1);
+        }
+
+        table tbody tr {
+            transition: background var(--transition-smooth);
+        }
+
+        table tbody tr:hover {
+            background: rgba(220, 20, 60, 0.05);
+        }
+
+        .status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status.pending {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+        }
+
+        .status.approved {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+        }
+
+        .status.fulfilled {
+            background: rgba(33, 150, 243, 0.2);
+            color: #2196f3;
+        }
+
+        .status.rejected {
+            background: rgba(220, 20, 60, 0.2);
+            color: var(--primary-red);
+        }
+
+        .priority {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .priority.normal {
+            background: rgba(33, 150, 243, 0.2);
+            color: #2196f3;
+        }
+
+        .priority.urgent {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+        }
+
+        .priority.emergency {
+            background: rgba(220, 20, 60, 0.2);
+            color: var(--primary-red);
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            background: transparent;
+            border: 1px solid rgba(220, 20, 60, 0.3);
+            color: var(--primary-red);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all var(--transition-smooth);
+        }
+
+        .action-btn:hover {
+            background: rgba(220, 20, 60, 0.1);
+            border-color: var(--primary-red);
+        }
+
+        /* Modal */
+        #new-request-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+
+        #new-request-modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: var(--medium-gray);
+            padding: 60px;
+            border-radius: 20px;
+            max-width: 600px;
+            width: 90%;
+            border: 1px solid rgba(220, 20, 60, 0.2);
+            position: relative;
+            animation: slideUpIn 0.4s ease;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text-gray);
+            background: none;
+            border: none;
+            transition: color var(--transition-smooth);
+        }
+
+        .modal-close:hover {
+            color: var(--primary-red);
+        }
+
+        .modal-content h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            color: var(--text-white);
+            font-family: var(--font-display);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-white);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            background: var(--dark-gray);
+            border: 1px solid rgba(220, 20, 60, 0.2);
+            border-radius: 10px;
+            color: var(--text-white);
+            font-family: var(--font-body);
+            transition: border-color var(--transition-smooth);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-red);
+            background: rgba(220, 20, 60, 0.05);
+        }
+
+        .form-group select option {
+            background: var(--dark-gray);
+            color: var(--text-white);
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .form-buttons button {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-smooth);
+        }
+
+        .submit-btn {
+            background: var(--primary-red);
+            color: var(--text-white);
+        }
+
+        .submit-btn:hover {
+            background: var(--dark-red);
+        }
+
+        .cancel-btn {
+            background: transparent;
+            color: var(--text-gray);
+            border: 1px solid rgba(220, 20, 60, 0.3);
+        }
+
+        .cancel-btn:hover {
+            border-color: var(--primary-red);
+            color: var(--primary-red);
+        }
+
+        /* Request Workflow Section */
+        .request-workflow-section {
+            background: var(--dark-gray);
+            padding: 80px 0;
+            border-top: 1px solid rgba(220, 20, 60, 0.1);
+        }
+
+        .workflow-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            align-items: start;
+        }
+
+        .workflow-step {
+            text-align: center;
+            padding: 40px 30px;
+            background: var(--medium-gray);
+            border-radius: 20px;
+            border: 1px solid rgba(220, 20, 60, 0.1);
+            transition: all var(--transition-smooth);
+        }
+
+        .workflow-step:hover {
+            border-color: rgba(220, 20, 60, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .workflow-step-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary-red);
+            margin-bottom: 15px;
+            font-family: var(--font-display);
+        }
+
+        .workflow-step-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-family: var(--font-display);
+        }
+
+        .workflow-step-desc {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .controls-bar {
+                flex-direction: column;
+            }
+
+            .search-input {
+                width: 100%;
+                min-width: auto;
+            }
+
+            .new-request-btn {
+                width: 100%;
+            }
+
+            .table-container {
+                padding: 20px;
+            }
+
+            table th, table td {
+                padding: 10px;
+                font-size: 0.8rem;
+            }
+
+            .modal-content {
+                padding: 40px 25px;
+            }
+
+            .workflow-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+        }
+
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 30px;
+            background: var(--primary-red);
+            color: var(--text-white);
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-weight: 600;
+            animation: slideInRight 0.3s ease;
+            z-index: 2000;
+        }
+    </style>
+</head>
+<body>
+    <div class="requests-page">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <span class="logo-icon">🩸</span>
+                    <span class="logo-text">ASHOK</span>
+                    <span class="logo-subtext">Blood Care</span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+                    <li><a href="donors.html" class="nav-link">Donors</a></li>
+                    <li><a href="blood-stock.html" class="nav-link">Blood Stock</a></li>
+                    <li><a href="requests.html" class="nav-link active">Requests</a></li>
+                    <li><a href="gallery.html" class="nav-link">Gallery</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                </ul>
+                <a href="#" class="cta-btn">DONATE BLOOD ↗</a>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="container">
+                <h1>Blood Requests</h1>
+                <p>Organize requirements clearly when every moment matters</p>
+                <div style="margin-top: 60px;">
+                    <img src="https://www.grapeshms.com/img/blog/grapes_blog/blog_moden_BBMS/topImage.jpg" alt="Blood Request Management" style="width: 100%; max-width: 600px; border-radius: 20px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); display: block; margin: 0 auto;">
+                    <p style="margin-top: 30px; font-size: 1.15rem; color: var(--text-white); font-weight: 600;">that matter</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content-section">
+            <div class="container">
+                <!-- Controls -->
+                <div class="controls-bar">
+                    <input type="text" class="search-input" placeholder="Search requests...">
+                    <button class="new-request-btn">+ NEW REQUEST</button>
+                </div>
+
+                <!-- Filters -->
+                <div class="filters">
+                    <button class="filter-btn active" data-filter="all">All Requests</button>
+                    <button class="filter-btn" data-filter="pending">Pending</button>
+                    <button class="filter-btn" data-filter="approved">Approved</button>
+                    <button class="filter-btn" data-filter="fulfilled">Fulfilled</button>
+                </div>
+
+                <!-- Table -->
+                <div class="table-container">
+                    <p class="demo-label">DEMO DATA</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>REQUEST ID</th>
+                                <th>PATIENT</th>
+                                <th>BLOOD GROUP</th>
+                                <th>UNITS</th>
+                                <th>HOSPITAL</th>
+                                <th>PRIORITY</th>
+                                <th>DATE</th>
+                                <th>STATUS</th>
+                                <th>ACTION</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#REQ-2048</td>
+                                <td>Demo Patient A</td>
+                                <td>O+</td>
+                                <td>2 units</td>
+                                <td>City Hospital</td>
+                                <td><span class="priority emergency">EMERGENCY</span></td>
+                                <td>Today</td>
+                                <td><span class="status pending">Pending</span></td>
+                                <td><button class="action-btn">View</button></td>
+                            </tr>
+                            <tr>
+                                <td>#REQ-2047</td>
+                                <td>Demo Patient B</td>
+                                <td>A+</td>
+                                <td>3 units</td>
+                                <td>Medical Center</td>
+                                <td><span class="priority normal">NORMAL</span></td>
+                                <td>Today</td>
+                                <td><span class="status approved">Approved</span></td>
+                                <td><button class="action-btn">View</button></td>
+                            </tr>
+                            <tr>
+                                <td>#REQ-2046</td>
+                                <td>Demo Patient C</td>
+                                <td>B-</td>
+                                <td>1 unit</td>
+                                <td>General Hospital</td>
+                                <td><span class="priority urgent">URGENT</span></td>
+                                <td>Yesterday</td>
+                                <td><span class="status fulfilled">Fulfilled</span></td>
+                                <td><button class="action-btn">View</button></td>
+                            </tr>
+                            <tr>
+                                <td>#REQ-2045</td>
+                                <td>Demo Patient D</td>
+                                <td>AB+</td>
+                                <td>4 units</td>
+                                <td>Specialist Clinic</td>
+                                <td><span class="priority emergency">EMERGENCY</span></td>
+                                <td>Yesterday</td>
+                                <td><span class="status fulfilled">Fulfilled</span></td>
+                                <td><button class="action-btn">View</button></td>
+                            </tr>
+                            <tr>
+                                <td>#REQ-2044</td>
+                                <td>Demo Patient E</td>
+                                <td>O-</td>
+                                <td>2 units</td>
+                                <td>Emergency Care</td>
+                                <td><span class="priority normal">NORMAL</span></td>
+                                <td>2 days ago</td>
+                                <td><span class="status pending">Pending</span></td>
+                                <td><button class="action-btn">View</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Request Workflow Section -->
+        <div class="request-workflow-section">
+            <div class="container">
+                <h2 class="section-title text-center" style="margin-bottom: 60px;">Blood Request <span class="accent">Workflow</span></h2>
+                <div class="workflow-grid">
+                    <div class="workflow-step">
+                        <div class="workflow-step-number">01</div>
+                        <div class="workflow-step-title">REQUEST</div>
+                        <div class="workflow-step-desc">Patient or hospital submits a blood request with required details</div>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="workflow-step-number">02</div>
+                        <div class="workflow-step-title">VERIFY</div>
+                        <div class="workflow-step-desc">Verify patient information and blood type requirements</div>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="workflow-step-number">03</div>
+                        <div class="workflow-step-title">MATCH</div>
+                        <div class="workflow-step-desc">Match available blood stock with request requirements</div>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="workflow-step-number">04</div>
+                        <div class="workflow-step-title">RESPOND</div>
+                        <div class="workflow-step-desc">Prepare and deliver blood units to the hospital</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <div class="footer-logo">
+                            <span class="logo-icon">🩸</span>
+                            <span>ASHOK Blood Care</span>
+                        </div>
+                        <p>Every Drop Can Save a Life.</p>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="dashboard.html">Dashboard</a></li>
+                            <li><a href="donors.html">Donors</a></li>
+                            <li><a href="blood-stock.html">Blood Stock</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h4>More</h4>
+                        <ul>
+                            <li><a href="requests.html">Requests</a></li>
+                            <li><a href="gallery.html">Gallery</a></li>
+                            <li><a href="about.html">About</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>© 2026 ASHOK BLOOD CARE · Student Project Demonstration</p>
+                    <p>Demo platform — all records and statistics shown are fictional.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- New Request Modal -->
+    <div id="new-request-modal">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <h2>Create New Request</h2>
+            <form id="request-form">
+                <div class="form-group">
+                    <label for="patientName">Patient Name</label>
+                    <input type="text" id="patientName" name="patientName" required>
+                </div>
+                <div class="form-group">
+                    <label for="bloodGroup">Blood Group</label>
+                    <select id="bloodGroup" name="bloodGroup" required>
+                        <option>Select Blood Group</option>
+                        <option>A+</option>
+                        <option>A-</option>
+                        <option>B+</option>
+                        <option>B-</option>
+                        <option>AB+</option>
+                        <option>AB-</option>
+                        <option>O+</option>
+                        <option>O-</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="units">Units Required</label>
+                    <input type="number" id="units" name="units" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="hospital">Hospital</label>
+                    <input type="text" id="hospital" name="hospital" required>
+                </div>
+                <div class="form-group">
+                    <label for="priority">Priority</label>
+                    <select id="priority" name="priority" required>
+                        <option>NORMAL</option>
+                        <option>URGENT</option>
+                        <option>EMERGENCY</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="date">Date Required</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+                <div class="form-buttons">
+                    <button type="submit" class="submit-btn">CREATE REQUEST</button>
+                    <button type="button" class="cancel-btn" onclick="document.getElementById('new-request-modal').classList.remove('active');">CANCEL</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

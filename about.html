@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - ASHOK Blood Care</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .about-page {
+            padding-top: 80px;
+        }
+
+        .about-hero {
+            background: linear-gradient(135deg, var(--dark-gray) 0%, var(--medium-gray) 100%);
+            padding: 120px 0;
+            border-bottom: 1px solid rgba(220, 20, 60, 0.1);
+            text-align: center;
+        }
+
+        .about-hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            font-family: var(--font-display);
+            line-height: 1.2;
+        }
+
+        .about-hero p {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .about-section {
+            padding: 100px 0;
+        }
+
+        .section-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            margin-bottom: 80px;
+        }
+
+        .section-text h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            font-family: var(--font-display);
+        }
+
+        .section-text p {
+            font-size: 1rem;
+            color: var(--text-gray);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .section-image {
+            position: relative;
+            height: 400px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .section-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+        }
+
+        /* Values Section */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+
+        .value-card {
+            background: var(--medium-gray);
+            padding: 50px 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(220, 20, 60, 0.1);
+            text-align: center;
+            transition: all var(--transition-smooth);
+        }
+
+        .value-card:hover {
+            border-color: rgba(220, 20, 60, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .value-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--primary-red);
+            margin-bottom: 20px;
+            font-family: var(--font-display);
+        }
+
+        .value-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-family: var(--font-display);
+        }
+
+        .value-description {
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+
+        /* Profile Section */
+        .profile-section {
+            background: var(--dark-gray);
+            padding: 80px 0;
+            border-top: 1px solid rgba(220, 20, 60, 0.1);
+            border-bottom: 1px solid rgba(220, 20, 60, 0.1);
+        }
+
+        .profile-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .profile-image {
+            position: relative;
+            height: 500px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+        }
+
+        .profile-text h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            font-family: var(--font-display);
+        }
+
+        .profile-subtitle {
+            font-size: 1rem;
+            color: var(--primary-red);
+            font-weight: 600;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+
+        .profile-text p {
+            font-size: 1rem;
+            color: var(--text-gray);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .profile-quote {
+            font-size: 1.2rem;
+            font-style: italic;
+            color: var(--text-white);
+            margin-top: 30px;
+            padding-left: 20px;
+            border-left: 3px solid var(--primary-red);
+            font-weight: 500;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: rgba(220, 20, 60, 0.2);
+        }
+
+        .timeline-items {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .timeline-item {
+            position: relative;
+            width: 48%;
+            padding: 30px 25px;
+            background: var(--medium-gray);
+            border-radius: 15px;
+            border: 1px solid rgba(220, 20, 60, 0.1);
+        }
+
+        .timeline-item:nth-child(odd) {
+            margin-left: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            margin-left: 52%;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: var(--primary-red);
+            border-radius: 50%;
+            top: 40px;
+            border: 3px solid var(--primary-black);
+        }
+
+        .timeline-item:nth-child(odd)::before {
+            right: -38px;
+        }
+
+        .timeline-item:nth-child(even)::before {
+            left: -38px;
+        }
+
+        .timeline-date {
+            font-weight: 700;
+            color: var(--primary-red);
+            margin-bottom: 10px;
+            font-family: var(--font-display);
+        }
+
+        .timeline-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-family: var(--font-display);
+        }
+
+        .timeline-description {
+            font-size: 0.95rem;
+            color: var(--text-gray);
+        }
+
+        @media (max-width: 1024px) {
+            .section-grid,
+            .profile-content {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+
+            .about-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::before {
+                left: 0;
+            }
+
+            .timeline-item {
+                width: 100%;
+                margin-left: 0 !important;
+                padding-left: 60px;
+            }
+
+            .timeline-item::before {
+                left: 0 !important;
+                right: auto !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .about-section {
+                padding: 60px 0;
+            }
+
+            .about-hero {
+                padding: 80px 0;
+            }
+
+            .about-hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-text h2 {
+                font-size: 1.8rem;
+            }
+
+            .section-image,
+            .profile-image {
+                height: 300px;
+            }
+
+            .value-number {
+                font-size: 2.5rem;
+            }
+
+            .profile-text h2 {
+                font-size: 1.5rem;
+            }
+
+            .profile-text p,
+            .section-text p {
+                font-size: 0.95rem;
+            }
+
+            .timeline-item {
+                padding-left: 50px;
+            }
+
+            .timeline-item::before {
+                width: 12px;
+                height: 12px;
+                top: 35px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="about-page">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <span class="logo-icon">🩸</span>
+                    <span class="logo-text">ASHOK</span>
+                    <span class="logo-subtext">A+ Blood Care</span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+                    <li><a href="donors.html" class="nav-link">Donors</a></li>
+                    <li><a href="blood-stock.html" class="nav-link">Blood Stock</a></li>
+                    <li><a href="requests.html" class="nav-link">Requests</a></li>
+                    <li><a href="gallery.html" class="nav-link">Gallery</a></li>
+                    <li><a href="about.html" class="nav-link active">About</a></li>
+                </ul>
+                <a href="#" class="cta-btn">DONATE BLOOD ↗</a>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <div class="about-hero">
+            <div class="container">
+                <h1>Built Around the<br>Value of <span class="accent">Every Drop.</span></h1>
+                <p>ASHOK Blood Care is a student-built demonstration platform exploring how technology can make blood-management workflows clearer, more connected and easier to understand.</p>
+                <div style="margin-top: 60px;">
+                    <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=90&fit=crop" alt="Blood Care" style="width: 100%; max-width: 600px; border-radius: 20px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); display: block; margin: 0 auto;">
+                    <p style="margin-top: 30px; font-size: 1.15rem; color: var(--text-white); font-weight: 600;">that matter</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Content -->
+        <div class="about-section">
+            <div class="container">
+                <!-- Our Story -->
+                <div class="section-grid">
+                    <div class="section-text">
+                        <h2>Our <span class="accent">Story</span></h2>
+                        <p>ASHOK Blood Care began as a vision to bridge the gap between blood donors, blood banks, and patients. We recognized that efficient blood management could be transformed through thoughtful digital design and modern technology.</p>
+                        <p>This platform demonstrates how digital solutions can simplify complex healthcare workflows, making it easier to save lives. Every feature has been designed with the user's needs in mind — whether it's a donor registering to help, or a hospital urgently requesting blood.</p>
+                    </div>
+                    <div class="section-image">
+                        <img src="https://ehc24.com/wp-content/uploads/2025/06/LifesavingBloodProducts5.jpg" alt="Our story">
+                    </div>
+                </div>
+
+                <!-- Our Mission -->
+                <div class="section-grid">
+                    <div class="section-image">
+                        <img src="https://th.bing.com/th/id/R.ae9bf62d7ed575ba266f1bc9ebd1adbf?rik=LLq%2bb5MxOku6xg&riu=http%3a%2f%2fdeccanhospital.org%2fimages%2fblog%2fb2.jpg&ehk=cwWfwFIvPkf3yvaVm0%2b9PHuN5tBwh7bt954X2nUFUY4%3d&risl=&pid=ImgRaw&r=0" alt="Our mission">
+                    </div>
+                    <div class="section-text">
+                        <h2>Our <span class="accent">Mission</span></h2>
+                        <p>To demonstrate how technology can make blood management more efficient, transparent, and accessible to everyone who needs it. We believe that smart systems can reduce barriers between donors and those who need blood, ultimately saving more lives.</p>
+                        <p>This project shows the potential of digital health platforms in making critical healthcare services more connected and responsive to community needs.</p>
+                    </div>
+                </div>
+
+                <!-- Our Vision -->
+                <div class="section-grid">
+                    <div class="section-text">
+                        <h2>Our <span class="accent">Vision</span></h2>
+                        <p>We envision a future where blood management is seamless, where donors are recognized and valued, and where hospitals can instantly access the blood they need. Technology should serve humanity, especially in healthcare.</p>
+                        <p>This platform serves as a proof-of-concept for what's possible when we combine thoughtful design with technology to solve real healthcare challenges.</p>
+                    </div>
+                    <div class="section-image">
+                        <img src="https://www.metropolisindia.com/upgrade/blog/upload/26/03/blood-components1774958043.webp" alt="Our vision">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Values Section -->
+        <div class="about-section" style="background: var(--dark-gray); border-top: 1px solid rgba(220, 20, 60, 0.1); border-bottom: 1px solid rgba(220, 20, 60, 0.1);">
+            <div class="container">
+                <h2 class="section-title text-center" style="margin-bottom: 60px;">Our <span class="accent">Values</span></h2>
+                <div class="values-grid">
+                    <div class="value-card">
+                        <div class="value-number">01</div>
+                        <div class="value-title">COMPASSION</div>
+                        <div class="value-description">We believe in the power of human compassion. Every interaction, every feature is designed with empathy for those who donate and those who receive.</div>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-number">02</div>
+                        <div class="value-title">TRANSPARENCY</div>
+                        <div class="value-description">Clear information builds trust. We make blood availability, donor records, and request status visible to all stakeholders in the system.</div>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-number">03</div>
+                        <div class="value-title">RESPONSIBILITY</div>
+                        <div class="value-description">Blood is precious. Every unit is handled with the highest responsibility, from storage to distribution, maintaining strict quality standards.</div>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-number">04</div>
+                        <div class="value-title">INNOVATION</div>
+                        <div class="value-description">Technology evolves constantly. We embrace innovation to make healthcare solutions smarter, faster, and more accessible to communities.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Section -->
+        <div class="profile-section">
+            <div class="container">
+                <h2 class="section-title text-center" style="margin-bottom: 60px;">Behind the <span class="accent">Vision</span></h2>
+                <div class="profile-content">
+                    <div class="profile-image">
+                        <img src="ashok.jpg" alt="Ashok Kumar">
+                    </div>
+                    <div class="profile-text">
+                        <h2>ASHOK KUMAR</h2>
+                        <div class="profile-subtitle">STUDENT & PROJECT CREATOR</div>
+                        <p>ASHOK Blood Care represents my passion for combining technology with real-world healthcare challenges. As a B.Tech CSE student, I built this platform to explore how digital solutions can make a tangible difference in saving lives.</p>
+                        <p>This project demonstrates the intersection of technical skills, UI/UX design thinking, and a commitment to creating solutions that matter. Every page, every interaction has been carefully crafted to showcase what's possible when technology meets purpose.</p>
+                        <div class="profile-quote">"Technology becomes meaningful when it solves a human problem."</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <div class="footer-logo">
+                            <span class="logo-icon">🩸</span>
+                            <span>ASHOK Blood Care</span>
+                        </div>
+                        <p>Every Drop Can Save a Life.</p>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="dashboard.html">Dashboard</a></li>
+                            <li><a href="donors.html">Donors</a></li>
+                            <li><a href="blood-stock.html">Blood Stock</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h4>More</h4>
+                        <ul>
+                            <li><a href="requests.html">Requests</a></li>
+                            <li><a href="gallery.html">Gallery</a></li>
+                            <li><a href="about.html">About</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>© 2026 ASHOK BLOOD CARE · Student Project Demonstration</p>
+                    <p>Demo platform — all records and statistics shown are fictional.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

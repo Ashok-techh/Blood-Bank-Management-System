@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donors - ASHOK Blood Care</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .donors-page {
+            padding-top: 80px;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--dark-gray) 0%, var(--medium-gray) 100%);
+            padding: 80px 0;
+            border-bottom: 1px solid rgba(220, 20, 60, 0.1);
+        }
+
+        .page-header .container {
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            font-family: var(--font-display);
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--text-gray);
+        }
+
+        .content-section {
+            padding: 80px 0;
+        }
+
+        .controls-bar {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 12px 40px 12px 15px;
+            background: var(--medium-gray);
+            border: 1px solid rgba(220, 20, 60, 0.1);
+            border-radius: 10px;
+            color: var(--text-white);
+            font-family: var(--font-body);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-red);
+        }
+
+        .add-donor-btn {
+            padding: 12px 30px;
+            background: var(--primary-red);
+            color: var(--text-white);
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-smooth);
+        }
+
+        .add-donor-btn:hover {
+            background: var(--dark-red);
+            box-shadow: 0 0 20px rgba(220, 20, 60, 0.4);
+        }
+
+        .filters {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            background: var(--medium-gray);
+            border: 1px solid rgba(220, 20, 60, 0.2);
+            color: var(--text-gray);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all var(--transition-smooth);
+            font-weight: 500;
+        }
+
+        .filter-btn.active {
+            background: var(--primary-red);
+            color: var(--text-white);
+            border-color: var(--primary-red);
+        }
+
+        .table-container {
+            background: var(--medium-gray);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(220, 20, 60, 0.1);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table thead {
+            border-bottom: 2px solid rgba(220, 20, 60, 0.2);
+        }
+
+        table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-gray);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        table td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(220, 20, 60, 0.1);
+        }
+
+        table tbody tr {
+            transition: background var(--transition-smooth);
+        }
+
+        table tbody tr:hover {
+            background: rgba(220, 20, 60, 0.05);
+        }
+
+        .status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            background: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            background: transparent;
+            border: 1px solid rgba(220, 20, 60, 0.3);
+            color: var(--primary-red);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all var(--transition-smooth);
+            margin-right: 8px;
+        }
+
+        .action-btn:hover {
+            background: rgba(220, 20, 60, 0.1);
+            border-color: var(--primary-red);
+        }
+
+        /* Modal */
+        #add-donor-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+
+        #add-donor-modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: var(--medium-gray);
+            padding: 60px;
+            border-radius: 20px;
+            max-width: 600px;
+            width: 90%;
+            border: 1px solid rgba(220, 20, 60, 0.2);
+            position: relative;
+            animation: slideUpIn 0.4s ease;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text-gray);
+            background: none;
+            border: none;
+            transition: color var(--transition-smooth);
+        }
+
+        .modal-close:hover {
+            color: var(--primary-red);
+        }
+
+        .modal-content h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            color: var(--text-white);
+            font-family: var(--font-display);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-white);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            background: var(--dark-gray);
+            border: 1px solid rgba(220, 20, 60, 0.2);
+            border-radius: 10px;
+            color: var(--text-white);
+            font-family: var(--font-body);
+            transition: border-color var(--transition-smooth);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-red);
+            background: rgba(220, 20, 60, 0.05);
+        }
+
+        .form-group select option {
+            background: var(--dark-gray);
+            color: var(--text-white);
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .form-buttons button {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-smooth);
+        }
+
+        .submit-btn {
+            background: var(--primary-red);
+            color: var(--text-white);
+        }
+
+        .submit-btn:hover {
+            background: var(--dark-red);
+        }
+
+        .cancel-btn {
+            background: transparent;
+            color: var(--text-gray);
+            border: 1px solid rgba(220, 20, 60, 0.3);
+        }
+
+        .cancel-btn:hover {
+            border-color: var(--primary-red);
+            color: var(--primary-red);
+        }
+
+        /* Visual Section */
+        .donor-visual-section {
+            margin-top: 100px;
+            padding: 80px 0;
+            background: var(--dark-gray);
+            border-top: 1px solid rgba(220, 20, 60, 0.1);
+            border-bottom: 1px solid rgba(220, 20, 60, 0.1);
+        }
+
+        .donor-visual-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .donor-visual-text h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            font-family: var(--font-display);
+        }
+
+        .donor-visual-text p {
+            font-size: 1rem;
+            color: var(--text-gray);
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .donor-visual-image img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .controls-bar {
+                flex-direction: column;
+            }
+
+            .search-input {
+                width: 100%;
+                min-width: auto;
+            }
+
+            .add-donor-btn {
+                width: 100%;
+            }
+
+            .table-container {
+                padding: 20px;
+            }
+
+            table th, table td {
+                padding: 10px;
+                font-size: 0.85rem;
+            }
+
+            .modal-content {
+                padding: 40px 25px;
+            }
+
+            .donor-visual-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .donor-visual-text h2 {
+                font-size: 1.8rem;
+            }
+
+            .donor-visual-image img {
+                height: 300px;
+            }
+        }
+
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 30px;
+            background: var(--primary-red);
+            color: var(--text-white);
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-weight: 600;
+            animation: slideInRight 0.3s ease;
+            z-index: 2000;
+        }
+
+        /* Donor Testimonials Slider */
+        .donor-testimonials-section {
+            padding: 100px 0;
+            background: var(--dark-gray);
+            border-top: 1px solid rgba(220, 20, 60, 0.1);
+            border-bottom: 1px solid rgba(220, 20, 60, 0.1);
+        }
+
+        .testimonials-title {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .testimonials-title h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            font-family: var(--font-display);
+        }
+
+        .testimonials-title p {
+            font-size: 1rem;
+            color: var(--text-gray);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .testimonials-slider-container {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .testimonials-slider {
+            display: flex;
+            overflow: hidden;
+            border-radius: 20px;
+        }
+
+        .testimonials-slide {
+            min-width: 100%;
+            display: flex;
+            transition: transform 0.5s ease;
+            background: var(--medium-gray);
+            border: 1px solid rgba(220, 20, 60, 0.1);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .testimonial-image {
+            flex: 0 0 40%;
+            min-height: 400px;
+        }
+
+        .testimonial-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .testimonial-content {
+            flex: 1;
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .testimonial-quote {
+            font-size: 1.3rem;
+            font-style: italic;
+            color: var(--text-white);
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            margin-top: auto;
+        }
+
+        .testimonial-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-white);
+            margin-bottom: 5px;
+            font-family: var(--font-display);
+        }
+
+        .testimonial-role {
+            font-size: 0.9rem;
+            color: var(--primary-red);
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .testimonial-stats {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(220, 20, 60, 0.2);
+            font-size: 0.9rem;
+            color: var(--text-gray);
+        }
+
+        .testimonials-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        .testimonials-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(220, 20, 60, 0.1);
+            border: 2px solid rgba(220, 20, 60, 0.3);
+            color: var(--primary-red);
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .testimonials-btn:hover {
+            background: var(--primary-red);
+            color: var(--text-white);
+            border-color: var(--primary-red);
+        }
+
+        .testimonials-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .testimonials-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(220, 20, 60, 0.2);
+            cursor: pointer;
+            transition: all var(--transition-smooth);
+        }
+
+        .testimonials-indicator.active {
+            background: var(--primary-red);
+            width: 30px;
+            border-radius: 6px;
+        }
+
+        @media (max-width: 768px) {
+            .testimonials-slide {
+                flex-direction: column;
+            }
+
+            .testimonial-image {
+                flex: 0 0 250px;
+                min-height: 250px;
+            }
+
+            .testimonial-content {
+                padding: 30px 25px;
+            }
+
+            .testimonial-quote {
+                font-size: 1.1rem;
+            }
+
+            .testimonials-title h2 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="donors-page">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <span class="logo-icon">🩸</span>
+                    <span class="logo-text">ASHOK</span>
+                    <span class="logo-subtext">Blood Care</span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+                    <li><a href="donors.html" class="nav-link active">Donors</a></li>
+                    <li><a href="blood-stock.html" class="nav-link">Blood Stock</a></li>
+                    <li><a href="requests.html" class="nav-link">Requests</a></li>
+                    <li><a href="gallery.html" class="nav-link">Gallery</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                </ul>
+                <a href="#" class="cta-btn">DONATE BLOOD ↗</a>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="container">
+                <h1>Donor Management</h1>
+                <p>Build a connected community of lifesaving donors</p>
+                <div style="margin-top: 60px;">
+                    <img src="https://www.sriramakrishnahospital.com/wp-content/uploads/2021/06/Blood-Donation-1.jpg" alt="Blood Donors" style="width: 100%; max-width: 600px; border-radius: 20px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); display: block; margin: 0 auto;">
+                    <p style="margin-top: 30px; font-size: 1.15rem; color: var(--text-white); font-weight: 600;">that matter</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content-section">
+            <div class="container">
+                <!-- Controls -->
+                <div class="controls-bar">
+                    <input type="text" class="search-input" placeholder="Search donors by name, phone, or location...">
+                    <button class="add-donor-btn">+ ADD DONOR</button>
+                </div>
+
+                <!-- Filters -->
+                <div class="filters">
+                    <button class="filter-btn active" data-filter="all">All Donors</button>
+                    <button class="filter-btn" data-filter="A+">A+</button>
+                    <button class="filter-btn" data-filter="A-">A-</button>
+                    <button class="filter-btn" data-filter="B+">B+</button>
+                    <button class="filter-btn" data-filter="O+">O+</button>
+                    <button class="filter-btn" data-filter="AB+">AB+</button>
+                </div>
+
+                <!-- Table -->
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>DONOR ID</th>
+                                <th>NAME</th>
+                                <th>BLOOD GROUP</th>
+                                <th>AGE</th>
+                                <th>LOCATION</th>
+                                <th>LAST DONATION</th>
+                                <th>STATUS</th>
+                                <th>ACTION</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>D-00001</td>
+                                <td>Rajesh Kumar</td>
+                                <td>O+</td>
+                                <td>28</td>
+                                <td>Mumbai</td>
+                                <td>2 weeks ago</td>
+                                <td><span class="status">Active</span></td>
+                                <td>
+                                    <button class="action-btn view-btn">View</button>
+                                    <button class="action-btn edit-btn">Edit</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>D-00002</td>
+                                <td>Priya Singh</td>
+                                <td>A+</td>
+                                <td>32</td>
+                                <td>Delhi</td>
+                                <td>1 month ago</td>
+                                <td><span class="status">Active</span></td>
+                                <td>
+                                    <button class="action-btn view-btn">View</button>
+                                    <button class="action-btn edit-btn">Edit</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>D-00003</td>
+                                <td>Amit Patel</td>
+                                <td>B+</td>
+                                <td>24</td>
+                                <td>Bangalore</td>
+                                <td>3 weeks ago</td>
+                                <td><span class="status">Active</span></td>
+                                <td>
+                                    <button class="action-btn view-btn">View</button>
+                                    <button class="action-btn edit-btn">Edit</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>D-00004</td>
+                                <td>Anjali Verma</td>
+                                <td>AB+</td>
+                                <td>26</td>
+                                <td>Pune</td>
+                                <td>Never</td>
+                                <td><span class="status">Active</span></td>
+                                <td>
+                                    <button class="action-btn view-btn">View</button>
+                                    <button class="action-btn edit-btn">Edit</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>D-00005</td>
+                                <td>Arjun Das</td>
+                                <td>O+</td>
+                                <td>35</td>
+                                <td>Kolkata</td>
+                                <td>5 days ago</td>
+                                <td><span class="status">Active</span></td>
+                                <td>
+                                    <button class="action-btn view-btn">View</button>
+                                    <button class="action-btn edit-btn">Edit</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Donor Testimonials Slider -->
+        <div class="donor-testimonials-section">
+            <div class="container">
+                <div class="testimonials-title">
+                    <h2>Stories from our <span class="accent">Heroes</span></h2>
+                    <p>Real donor stories and the lives they've saved</p>
+                </div>
+
+                <div class="testimonials-slider-container">
+                    <div class="testimonials-slider" id="testimonials-slider">
+                        <!-- Slide 1 -->
+                        <div class="testimonials-slide">
+                            <div class="testimonial-image">
+                                <img src="https://img.freepik.com/premium-photo/blood-donor-smiling-camera_13339-300906.jpg" alt="Donor Story">
+                            </div>
+                            <div class="testimonial-content">
+                                <div class="testimonial-quote">"Donating blood gave me a sense of purpose. Knowing that my single donation could save up to 3 lives is the most rewarding feeling."</div>
+                                <div class="testimonial-author">
+                                    <div class="testimonial-name">Rahul Sharma</div>
+                                    <div class="testimonial-role">Regular Donor • 12 Donations</div>
+                                    <div class="testimonial-stats">Lives saved: 36 | Total units: 6</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 2 -->
+                        <div class="testimonials-slide">
+                            <div class="testimonial-image">
+                                <img src="https://media.istockphoto.com/photos/young-male-donor-donating-blood-picture-id1307735167?k=20&m=1307735167&s=612x612&w=0&h=PeVtmBHY2pBO3hYuW0CrYLcj6CyO4ivpqV6-Hx0rfK0=" alt="Donor Story">
+                            </div>
+                            <div class="testimonial-content">
+                                <div class="testimonial-quote">"When I learned my blood type was O negative, I realized I had a special responsibility. Since then, I've donated 18 times and never looked back."</div>
+                                <div class="testimonial-author">
+                                    <div class="testimonial-name">Priya Gupta</div>
+                                    <div class="testimonial-role">Universal Donor • 18 Donations</div>
+                                    <div class="testimonial-stats">Lives saved: 54 | Total units: 9</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 3 -->
+                        <div class="testimonials-slide">
+                            <div class="testimonial-image">
+                                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=600&q=90&fit=crop" alt="Donor Story">
+                            </div>
+                            <div class="testimonial-content">
+                                <div class="testimonial-quote">"A family member needed blood urgently. That experience made me understand why donors matter so much. Now I donate every 3 months without fail."</div>
+                                <div class="testimonial-author">
+                                    <div class="testimonial-name">Arjun Mehta</div>
+                                    <div class="testimonial-role">Committed Donor • 24 Donations</div>
+                                    <div class="testimonial-stats">Lives saved: 72 | Total units: 12</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 4 -->
+                        <div class="testimonials-slide">
+                            <div class="testimonial-image">
+                                <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&q=90&fit=crop" alt="Donor Story">
+                            </div>
+                            <div class="testimonial-content">
+                                <div class="testimonial-quote">"I never realized how simple it was to donate blood until I registered with ASHOK Blood Care. The platform made everything transparent and easy."</div>
+                                <div class="testimonial-author">
+                                    <div class="testimonial-name">Neha Singh</div>
+                                    <div class="testimonial-role">New Donor • 3 Donations</div>
+                                    <div class="testimonial-stats">Lives saved: 9 | Total units: 1.5</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 5 -->
+                        <div class="testimonials-slide">
+                            <div class="testimonial-image">
+                                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=90&fit=crop" alt="Donor Story">
+                            </div>
+                            <div class="testimonial-content">
+                                <div class="testimonial-quote">"Every time I donate, I feel connected to this bigger mission of saving lives. It's become a part of my routine and my values."</div>
+                                <div class="testimonial-author">
+                                    <div class="testimonial-name">Vikram Patel</div>
+                                    <div class="testimonial-role">Platinum Donor • 32 Donations</div>
+                                    <div class="testimonial-stats">Lives saved: 96 | Total units: 16</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Controls -->
+                    <div class="testimonials-controls">
+                        <button class="testimonials-btn" id="testimonials-prev">❮</button>
+                        <button class="testimonials-btn" id="testimonials-next">❯</button>
+                    </div>
+
+                    <!-- Indicators -->
+                    <div class="testimonials-indicators">
+                        <span class="testimonials-indicator active" data-slide="0"></span>
+                        <span class="testimonials-indicator" data-slide="1"></span>
+                        <span class="testimonials-indicator" data-slide="2"></span>
+                        <span class="testimonials-indicator" data-slide="3"></span>
+                        <span class="testimonials-indicator" data-slide="4"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Visual Section -->
+        <div class="donor-visual-section">
+            <div class="container">
+                <div class="donor-visual-grid">
+                    <div class="donor-visual-text">
+                        <h2>Every donor becomes part of something <span class="accent">bigger.</span></h2>
+                        <p>Registered donors are the backbone of our blood management system. They represent hope, compassion, and a commitment to saving lives. Every donation creates a ripple effect that extends far beyond the individual.</p>
+                        <p>Join thousands of donors who have made a difference in countless lives.</p>
+                        <button class="btn btn-primary">BECOME A DONOR ↗</button>
+                    </div>
+                    <div class="donor-visual-image">
+                        <img src="https://images.unsplash.com/photo-1579154204601-01d5e0e10b6b?w=600&q=90&fit=crop" alt="Community donors">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <div class="footer-logo">
+                            <span class="logo-icon">🩸</span>
+                            <span>ASHOK Blood Care</span>
+                        </div>
+                        <p>Every Drop Can Save a Life.</p>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="dashboard.html">Dashboard</a></li>
+                            <li><a href="donors.html">Donors</a></li>
+                            <li><a href="blood-stock.html">Blood Stock</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h4>More</h4>
+                        <ul>
+                            <li><a href="requests.html">Requests</a></li>
+                            <li><a href="gallery.html">Gallery</a></li>
+                            <li><a href="about.html">About</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>© 2026 ASHOK BLOOD CARE · Student Project Demonstration</p>
+                    <p>Demo platform — all records and statistics shown are fictional.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Add Donor Modal -->
+    <div id="add-donor-modal">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <h2>Add New Donor</h2>
+            <form id="donor-form">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="number" id="age" name="age" required>
+                </div>
+                <div class="form-group">
+                    <label for="bloodGroup">Blood Group</label>
+                    <select id="bloodGroup" name="bloodGroup" required>
+                        <option>Select Blood Group</option>
+                        <option>A+</option>
+                        <option>A-</option>
+                        <option>B+</option>
+                        <option>B-</option>
+                        <option>AB+</option>
+                        <option>AB-</option>
+                        <option>O+</option>
+                        <option>O-</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <input type="text" id="location" name="location" required>
+                </div>
+                <div class="form-buttons">
+                    <button type="submit" class="submit-btn">SAVE DONOR</button>
+                    <button type="button" class="cancel-btn" onclick="document.getElementById('add-donor-modal').classList.remove('active');">CANCEL</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
